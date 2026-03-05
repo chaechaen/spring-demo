@@ -49,4 +49,8 @@ public class TodoDAO {
         // DB 조회했다고 가정
         return todos;
     }
+
+    public void save(Todo todo) {
+        todos.add(todo);
+    }
 }
