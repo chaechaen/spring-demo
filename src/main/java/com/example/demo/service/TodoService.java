@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TodoService {
+
     private final TodoDAO todoDAO;
 
     public List<Todo> getTodoList() {

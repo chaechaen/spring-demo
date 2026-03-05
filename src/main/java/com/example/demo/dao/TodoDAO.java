@@ -1,15 +1,14 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Todo;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Component
 public class TodoDAO {
-    // 분류, 제목, 내용, 기한
 
     private static List<Todo> todos;
 
