@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Todo List</title>
+    <style>
+        :root { --radius: 16px; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+            background: #f6f7fb;
+            color: #111;
+        }
+        .wrap {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 28px 18px 60px;
+        }
+        .header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .title {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            margin: 6px 0 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid #e9e9ef;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            font-size: 13px;
+            color: #333;
+            white-space: nowrap;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+        @media (max-width: 720px) {
+            .grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; }
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #ececf3;
+            border-radius: var(--radius);
+            padding: 16px 16px 14px;
+            box-shadow: 0 6px 18px rgba(22, 22, 44, 0.06);
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(22, 22, 44, 0.10);
+        }
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid #e7e7ef;
+            background: #fafafe;
+        }
+        .date {
+            font-size: 12px;
+            color: #666;
+        }
+        .card h2 {
+            margin: 0 0 8px;
+            font-size: 18px;
+            letter-spacing: -0.3px;
+        }
+        .summary {
+            margin: 0;
+            color: #444;
+            line-height: 1.55;
+            font-size: 14px;
+        }
+        .empty {
+            background: #fff;
+            border: 1px dashed #d8d8e3;
+            border-radius: var(--radius);
+            padding: 26px 16px;
+            text-align: center;
+            color: #666;
+        }
+        .footer {
+            margin-top: 18px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        /* 카테고리별 톤 */
+        .c-study { background: #f7fbff; }
+        .c-project { background: #f8fff8; }
+        .c-career { background: #fffaf6; }
+        .c-health { background: #fbf7ff; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <div>
+            <h1 class="title">Todo List</h1>
+            <p class="subtitle">DispatcherServlet → Controller → Service → DAO → View(Thymeleaf) 흐름을 SSR로 확인한다.</p>
+        </div>
+        <div class="chip">
+            <span>총 개수</span>
+            <b th:text="${#lists.size(todos)}">0</b>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(todos)}" class="empty">
+        아직 등록된 Todo가 없다. DAO 더미 데이터를 확인해보자.
+    </div>
+
+    <div th:if="${!#lists.isEmpty(todos)}" class="grid">
+        <div th:each="t : ${todos}"
+             th:class="'card' +
+                       (${t.category} == 'Study' ? ' c-study' : '') +
+                       (${t.category} == 'Project' ? ' c-project' : '') +
+                       (${t.category} == 'Career' ? ' c-career' : '') +
+                       (${t.category} == 'Health' ? ' c-health' : '')">
+
+            <div class="top">
+                <span class="badge" th:text="${t.category}">Category</span>
+                <span class="date" th:text="${#temporals.format(t.date, 'yyyy-MM-dd')}">2026-03-08</span>
+            </div>
+
+            <h2 th:text="${t.title}">Title</h2>
+            <p class="summary" th:text="${t.summary}">Summary</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        Tip: breakpoints → DispatcherServlet#doDispatch, RequestMappingHandlerAdapter, ThymeleafView#render
+    </div>
+</div>
+</body>
+</html>
