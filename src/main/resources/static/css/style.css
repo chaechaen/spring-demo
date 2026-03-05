@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    background-color: #f6f5f1;
+    color: #2d2d2d;
+    padding: 48px 20px 80px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 640px;
+}
+
+/* ── Header ── */
+.header {
+    margin-bottom: 36px;
+    padding-left: 2px;
+}
+
+.header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.header p {
+    font-size: 0.88rem;
+    color: #888;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+}
+
+/* ── Stats ── */
+.stats-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+    border: 1px solid #e8e6e1;
+    transition: box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* ── Todo List ── */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.todo-card {
+    background: #fff;
+    border: 1px solid #e8e6e1;
+    border-radius: 14px;
+    padding: 20px 22px;
+    position: relative;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.todo-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+/* Category left border */
+.todo-card[data-category="Study"] {
+    border-left-color: #5b9bd5;
+}
+
+.todo-card[data-category="Project"] {
+    border-left-color: #9b7ed8;
+}
+
+.todo-card[data-category="Career"] {
+    border-left-color: #5bb88a;
+}
+
+.todo-card[data-category="Health"] {
+    border-left-color: #e88d8d;
+}
+
+.todo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.todo-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Category badge */
+.category-badge {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.category-badge[data-category="Study"] {
+    background: #eef4fb;
+    color: #4a86b8;
+}
+
+.category-badge[data-category="Project"] {
+    background: #f2eef9;
+    color: #7b62b8;
+}
+
+.category-badge[data-category="Career"] {
+    background: #edf7f1;
+    color: #3f8f65;
+}
+
+.category-badge[data-category="Health"] {
+    background: #fdf0f0;
+    color: #c46a6a;
+}
+
+.todo-summary {
+    font-size: 0.84rem;
+    color: #777;
+    line-height: 1.55;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.todo-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.date-icon {
+    width: 14px;
+    height: 14px;
+    color: #bbb;
+}
+
+.todo-date {
+    font-size: 0.76rem;
+    color: #aaa;
+    font-weight: 400;
+}
+
+.todo-date.soon {
+    color: #d4a03c;
+    font-weight: 500;
+}
+
+.todo-date.overdue {
+    color: #c96161;
+    font-weight: 500;
+}
+
+/* ── Empty state ── */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-state .emoji {
+    font-size: 2.5rem;
+    margin-bottom: 14px;
+}
+
+.empty-state p {
+    color: #999;
+    font-size: 0.92rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    body {
+        padding: 28px 14px 60px;
+    }
+
+    .header h1 {
+        font-size: 1.45rem;
+    }
+
+    .stats-bar {
+        gap: 6px;
+    }
+
+    .stat-card {
+        padding: 14px 10px;
+    }
+
+    .stat-number {
+        font-size: 1.25rem;
+    }
+
+    .todo-card {
+        padding: 16px 16px;
+    }
+}
