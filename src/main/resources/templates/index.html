@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Todo List</h1>
+            <p>오늘도 하나씩, 차근차근.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" th:text="${#lists.size(list)}">0</div>
+                <div class="stat-label">전체</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="categoryCount">0</div>
+                <div class="stat-label">카테고리</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="soonCount">0</div>
+                <div class="stat-label">마감 임박</div>
+            </div>
+        </div>
+
+        <!-- Todo List -->
+        <div class="todo-list" th:if="${!#lists.isEmpty(list)}">
+            <div class="todo-card" th:each="todo : ${list}" th:attr="data-category=${todo.category}">
+                <div class="todo-top">
+                    <span class="todo-title" th:text="${todo.title}">제목</span>
+                    <span class="category-badge" th:attr="data-category=${todo.category}"
+                        th:text="${todo.category}">Category</span>
+                </div>
+                <div class="todo-summary" th:text="${todo.summary}">요약 내용</div>
+                <div class="todo-footer">
+                    <svg class="date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span class="todo-date" th:text="${#temporals.format(todo.date, 'yyyy년 MM월 dd일')}"
+                        th:classappend="${todo.date.isBefore(T(java.time.LocalDate).now())} ? 'overdue' : (${todo.date.isBefore(T(java.time.LocalDate).now().plusDays(7))} ? 'soon' : '')">
+                        날짜
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" th:if="${#lists.isEmpty(list)}">
+            <div class="emoji">🎉</div>
+            <p>할 일이 없습니다. 오늘은 쉬어가세요!</p>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.todo-card');
+            const categories = new Set();
+            let soonCount = 0;
+
+            cards.forEach(card => {
+                categories.add(card.getAttribute('data-category'));
+            });
+
+            document.querySelectorAll('.todo-date.soon, .todo-date.overdue').forEach(() => soonCount++);
+
+            document.getElementById('categoryCount').textContent = categories.size;
+            document.getElementById('soonCount').textContent = soonCount;
+        });
+    </script>
+</body>
+
+</html>
